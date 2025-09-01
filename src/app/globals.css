@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: inherit;
+    scroll-behavior: smooth;
+    list-style: none;
+}
+
+img {
+    display: block;
+}

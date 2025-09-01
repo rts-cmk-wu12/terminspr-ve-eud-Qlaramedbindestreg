@@ -1,0 +1,16 @@
+// fonts 
+:root {
+  --font-main: var(--font-ubuntu);
+  --font-logo-primary: var(--font-roboto);
+  --font-logo-secondary: var(--font-racing);
+}
+// font sizes
+$font-size-sm: 18px;
+$font-size-md: 24px;
+$font-size-lg: 36px;
+
+// colors
+$color-light: #EAEAEA;
+$color-primary: #5E2E53;
+$color-accent: #E1A1E9;
+$color-dark: #000000;

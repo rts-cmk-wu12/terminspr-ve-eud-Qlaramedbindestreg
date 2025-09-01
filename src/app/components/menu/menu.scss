@@ -1,0 +1,39 @@
+@import "../../components/variables";
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: $color-light;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid $color-dark;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $color-dark;
+        font-size: 24px;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: $color-dark;
+            color: $color-light;
+            cursor: pointer;
+        }
+    }
+}
