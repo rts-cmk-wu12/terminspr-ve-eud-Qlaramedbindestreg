@@ -1,0 +1,38 @@
+@import "../../components/variables";
+
+.searchPage {
+    background-color: $color-primary;
+    min-height: 100dvh;
+    width: 100%;
+    padding: 1rem;
+ 
+    h1 {
+      font: var(--font-ubuntu);
+      color: white;
+      font-size: $font-size-lg;
+      text-align: left;
+      margin: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: rgba(255, 255, 255, 0.219);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        font-size: $font-size-md;
+
+    }
+
+    .searchIcon {
+        position: absolute;
+        right: 0.8rem;
+        top: 50%;
+        transform: transformY(-50%);
+        color: #555;
+        pointer-events: none; 
+    }
+}

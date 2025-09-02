@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link"
 import "./page.scss";
+import Button from "./components/button/button";
 
 export const metadata = {
   title: "Hjem",
@@ -28,7 +29,8 @@ export default function Home() {
    
    <div className="buttonContainer">
      <Link href="/aktiviteter">
-     <button className="splashscreenButton">Kom godt igang</button>
+     <Button className="splashscreenButton">Kom godt igang</Button>
+     
      </Link>
    </div>
    

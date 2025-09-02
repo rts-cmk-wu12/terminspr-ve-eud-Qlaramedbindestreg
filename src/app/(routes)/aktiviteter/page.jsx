@@ -2,6 +2,10 @@
 import "./aktiviteter.scss";
 import Menu from "../../components/menu/menu.jsx";
 import { cookies } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
+import ActivitiesList from "@/app/components/activity-list/activity-list";
+
 
 
 export const metadata = {
@@ -19,27 +23,33 @@ export default async function AktiviteterPage() {
         )
     }
 
-  const response = await fetch("http://localhost:4000/api/v1/activities/1", {
+  const response = await fetch("http://localhost:4000/api/v1/activities", {
     headers: {
-        Authorization: "Bearer" + access_token.value,
+        Authorization: "Bearer " + access_token.value,
     },
     method: "GET",
   });
 
   if (response.status !== 200) {
     return {
-        success: false,
         errors: ["Noget gik galt på serveren. Prøv igen senere"],
     };
   }
   const activities = await response.json();
-
+// Kilde: Repitition. /Users/qlara/Desktop/coding/next/next-repetition/src/components/ui/kage-table/page.jsx
     return (
     <>
-    <div className="aktiviteter-page">
+    
+    <div className="activities-page">
        <h1>Aktiviteter</h1>
-    </div>
-    <Menu></Menu>
+       {activities.length === 0 ? (
+        <p>Ingen aktiviteter fundet.</p>
+       ) : ( 
+     <ActivitiesList activities={activities}></ActivitiesList>
+        )}
+        
+        </div>
+        <Menu></Menu>
     </>
-    )
+    );
 } 

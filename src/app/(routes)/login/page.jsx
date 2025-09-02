@@ -3,6 +3,9 @@ import "./login.scss";
 import Image from "next/image"
 import { useActionState } from "react";
 import loginAction from "@/actions/login";
+import Button from "../../components/button/button";
+
+
 
 
 export default function LogIn() {
@@ -32,7 +35,7 @@ export default function LogIn() {
                        <p>{formState?.properties?.password?.errors}</p>
                 </label>
             </div>
-            <button type="submit" className="loginButton">Log ind</button>
+            <Button type="submit" className="loginButton">Log ind</Button>
             	<p>{formState?.errors}</p>
         </form>
     
