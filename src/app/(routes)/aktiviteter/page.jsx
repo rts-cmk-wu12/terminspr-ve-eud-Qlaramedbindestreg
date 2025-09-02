@@ -1,6 +1,6 @@
 
 import "./aktiviteter.scss";
-import Menu from "../../components/menu/menu.jsx";
+
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +49,7 @@ export default async function AktiviteterPage() {
         )}
         
         </div>
-        <Menu></Menu>
+     
     </>
     );
 } 

@@ -1,6 +1,7 @@
 
 import "./globals.css";
 import { Ubuntu, Roboto, Racing_Sans_One } from 'next/font/google'
+import Menu from "./components/menu/menu";
 
 //Kilde: https://nextjs.org/docs/app/getting-started/fonts
 
@@ -27,13 +28,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  
   return (
     <html lang="da" className={`${ubuntu.variable} ${roboto.variable} ${racing.variable}`}>
  
         <body>
      
           {children}
-
+          <Menu></Menu>
         </body>
 
     </html>

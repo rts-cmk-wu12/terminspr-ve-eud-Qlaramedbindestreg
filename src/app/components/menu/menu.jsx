@@ -2,6 +2,7 @@
 
 import "./menu.scss";
 import { FaHome, FaSearch, FaCalendarAlt} from "react-icons/fa";
+import Link from "next/link";
 
 export default function Menu() {
     return (
@@ -9,19 +10,34 @@ export default function Menu() {
           <div className="menu">
             <div className="menu-item">
                 <div className="icon-circle">
-                   <FaHome></FaHome>
+                   
+
+                    <Link
+                    href="/">
+                        <FaHome></FaHome>
+
+                    </Link>
+                   
                 </div>
             </div>
 
                 <div className="menu-item">
                 <div className="icon-circle">
-                   <FaSearch></FaSearch>
+                  
+                    <Link href="/sogeside">
+                    <FaSearch></FaSearch>
+                    </Link>
+                  
                 </div>
             </div>
 
                 <div className="menu-item">
                 <div className="icon-circle">
-                   <FaCalendarAlt></FaCalendarAlt>
+                   
+                    <Link  href="/kalender">
+                    <FaCalendarAlt></FaCalendarAlt>
+                    </Link>
+                   
                 </div>
             </div>
 
