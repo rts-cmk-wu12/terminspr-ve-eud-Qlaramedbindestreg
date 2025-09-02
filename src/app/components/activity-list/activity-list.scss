@@ -60,4 +60,18 @@
   a:hover {
     text-decoration: none;
 }
+
+}
+
+.noResults {
+    @extend .activity-card;
+     text-align: center;
+     font-style: italic;
+     opacity: 0.8;
+     padding: 1rem;
+     background-color: $color-light;
+     color: $color-dark;
+     margin: 1rem;
+
+     
 }

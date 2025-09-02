@@ -5,7 +5,12 @@ import Link from "next/link";
 
 export default function ActivitiesList({ activities }) {
     if (!activities || activities.length === 0) {
-        return <p>Der blev ikke fundet nogle aktiviteter. </p>
+        return (
+            <div className="activities-container">
+        <p className="activity-card noResults">
+            Der blev ikke fundet nogle aktiviteter. </p>
+        </div>
+    );
     } 
 
         return (
