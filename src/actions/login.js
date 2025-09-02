@@ -9,6 +9,7 @@ const schema = z.object({
     username: z.string().min(1, {message: "Brugernavn skal være udfyldt"}),
     password: z.string().min(1, { message: "Adgangskode skal være udfyldt"})
 });
+ 
 
 const validated = schema.safeParse({
     username, password
