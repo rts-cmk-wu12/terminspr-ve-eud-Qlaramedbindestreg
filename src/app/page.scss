@@ -1,13 +1,13 @@
 @import "./components/variables.scss";
 
-.splashscreenContainer {
+.splashscreen-container {
     position: relative;
     width: 100vw;
     height: 100vh;
 
 }
 
-.logoContainer {
+.logo-container {
     position: absolute;
     top: 60%;
     left: 5%;
@@ -22,7 +22,7 @@
          text-transform: uppercase;
      
 
-        .logoPrimary {
+        .logo-primary {
             font-family: var(--font-logo-primary);
             margin-right: 0.25rem;
             color: transparent;
@@ -30,13 +30,13 @@
             
         }
 
-        .logoSecondary {
+        .logo-secondary {
             font-family: var(--font-logo-secondary);
             color: hotpink;
              -webkit-text-stroke: 1px black;
         }
     }
-    .logoUnderline {
+    .logo-underline {
         margin: 0.5rem auto 0;
         height: 1rem;
         width: 110%;
@@ -45,13 +45,13 @@
     }
 }
 
-.backgroundImage {
+.background-image {
     object-fit: cover;
      width: 100%;
   height: 100%;
 }
 
-.buttonContainer {
+.button-container {
     position: absolute;
     bottom: 5%;
     width: 100%;
@@ -59,7 +59,7 @@
     justify-content: center;
 }
 
-.splashscreenButton {
+.splashscreen-button {
  
     z-index: 200;
     opacity: 0;

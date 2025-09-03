@@ -44,7 +44,7 @@ export default function LogIn() {
     return (
       
         <>
-        <div className="loginContainer">
+        <div className="login-container">
             <Image 
                 src="/images/splash-image.jpg" 
                 fill
@@ -69,7 +69,7 @@ export default function LogIn() {
                     )}
                 </label>
 
-                <Button type="submit" className="loginButton" disabled={isPending}>
+                <Button type="submit" className="login-button" disabled={isPending}>
                     {isPending ? "Logger ind..." : "Log ind"}
                 </Button>
 

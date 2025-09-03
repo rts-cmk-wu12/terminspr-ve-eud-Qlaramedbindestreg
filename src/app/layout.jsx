@@ -29,17 +29,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 
-   const hideMenuPaths = ["/", "/login"];
+
   
   return (
     <html lang="da" className={`${ubuntu.variable} ${roboto.variable} ${racing.variable}`}>
- 
         <body>
-     
           {children}
           <MenuWrapper></MenuWrapper>
         </body>
-
     </html>
   );
 }

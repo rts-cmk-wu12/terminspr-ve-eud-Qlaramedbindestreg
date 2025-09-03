@@ -1,123 +1,159 @@
 "use client";
 
+import "./aktivitetsdetaljer.scss";
 import Button from "../../components/button/button";
 import Image from "next/image";
-import "./aktivitetsdetaljer.scss";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import enrollActivity from "@/actions/create-activity";
-import leaveActivity from "@/actions/delete-activity";
-import { useActionState } from "react";
+import LoginButton from "@/app/components/login-button/login-button";
 
-// Kilde: Repitition /Users/qlara/Desktop/coding/next/next-repetition/src/app/(routes)/dashboard/update/[kageid]/page.jsx
-export default function AktivitetsDetaljer({ params }) {
-    const searchParams = useSearchParams();
-    const id = searchParams.get("id");
-    // Kilde: https://nextjs.org/docs/app/api-reference/functions/use-search-params
-    
-    const [activity, setActivity] = useState(null);
-    const [user, setUser] = useState(null);
-    const [isEnrolled, setIsEnrolled] = useState(false);
-    const [conflictingActivity, setConflictingActivity] = useState(false);
+export default function AktivitetsDetaljer() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const router = useRouter();
+
+  const [activity, setActivity] = useState(null);
+  const [user, setUser] = useState(null);
+  const [userRoster, setUserRoster] = useState([]);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+
+ 
+  useEffect(() => {
+    const storedToken = localStorage.getItem("hallojsovs");
+    const storedUser = localStorage.getItem("user");
+    const storedRoster = JSON.parse(localStorage.getItem("roster") || "[]");
+
+    if (!storedToken || !storedUser) return;
+
+    setUser(JSON.parse(storedUser));
+    setUserRoster(storedRoster);
+  }, []);
 
 
+  useEffect(() => {
+    if (!id) return;
 
-    const [enrollState, enrollAction, enrolling] = useActionState(enrollActivity, 
-        { success: null});
-    const [leaveState, leaveAction, leaving] = useActionState(leaveActivity, 
-        { success: null});
-
-   useEffect(() => {
-            if (!id) return;
-
-    const fetchData = async () => {
-        //Kilde: https://nextjs.org/docs/app/getting-started/fetching-data
-      const token = localStorage.getItem("hallojsovs");
-      if (!token) {
-        console.error("No token found");
-        return;
-      }
-
+    const fetchActivity = async () => {
       try {
+        const token = localStorage.getItem("hallojsovs");
+        const res = await fetch(`http://localhost:4000/api/v1/activities/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Kunne ikke hente aktiviteten");
+        const data = await res.json();
+        setActivity(data);
 
   
-        const activityRes = await fetch(`http://localhost:4000/api/v1/activities/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!activityRes.ok) throw new Error("Fejl ved hentning af aktivitet");
-        const activityData = await activityRes.json();
-        setActivity(activityData);
-
-       
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        const userId = payload.data.id; 
-
-       
-        const userRes = await fetch(`http://localhost:4000/api/v1/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!userRes.ok) throw new Error("Fejl ved hentning af bruger");
-        const userData = await userRes.json();
-        setUser(userData);
-
-      
-        const rosterRes = await fetch(`http://localhost:4000/api/v1/users/${userId}/roster/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (!rosterRes.ok) throw new Error("Fejl ved hentning af brugerens aktiviteter");
-        const rosterData = await rosterRes.json();
-        setIsEnrolled(rosterData.some((a) => a.id === activityData.id));
-
+        const roster = JSON.parse(localStorage.getItem("roster") || "[]");
+        setIsEnrolled(roster.some((a) => a.id === data.id));
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchData();
+    fetchActivity();
   }, [id]);
 
+  const handleTilmeld = async () => {
+    if (!user) {
+      alert("Login for at tilmelde dig");
+      return;
+    }
 
-    if (!activity) return <p>Loading...</p>
+    if (isEnrolled) {
+      alert("Du er allerede tilmeldt denne aktivitet");
+      return;
+    }
 
-    // Kilde: repitition: /Users/qlara/Desktop/coding/next/next-repetition/src/components/ui/kage-table/page.jsx
-    return (
-        <>
-        <div className="activity-detail-page">
-            <div className="activity-image-container">
-                <Image
-                src={activity.image?.url || "/images/download (1).jpeg"}
-                alt={activity.title || "Aktivitet"}
-                fill
-                ></Image>
+    if (user.age < activity.ageLimit) {
+      alert(`Du skal være mindst ${activity.ageLimit} år`);
+      return;
+    }
 
-                <div className="button-overlay">
-                  <Button>Tilmeld</Button>
-                </div>
 
-            </div>
-            <div className="activity-info">
-                <h1>{activity.title}</h1>
-                <p>{activity.description}</p>
-                <p>Aldersgrænse: {activity.ageLimit}</p>
-                <p>{activity.weekday} Kl. {activity.time}</p>
+    if (userRoster.some((a) => a.weekday === activity.weekday)) {
+      alert("Du kan ikke tilmelde dig to aktiviteter på samme dag");
+      return;
+    }
 
-                {user && (
-                    <form action={isEnrolled ? leaveAction : enrollAction}>
-                        <input type="hidden" name="userId" value={user.id} />
-                        <input type="hidden" name="activityId" value={activity.id} />
-                        <Button type="submit" disabled={enrolling || leaving}>
-                            {isEnrolled ? "Forlad" : "Tilmeld"} 
-                        </Button>
-                    </form>
-                )}
+    try {
+      const token = localStorage.getItem("hallojsovs");
+      const res = await fetch(
+        `http://localhost:4000/api/v1/users/${user.id}/activities/${activity.id}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-                {enrollState?.errors && <p>{enrollState.errors}</p>}
-                {leaveState?.errors && <p>{leaveState.errors}</p>}
+      if (!res.ok) throw new Error("Kunne ikke tilmelde");
 
-            </div>
 
+      const updatedRoster = [...userRoster, activity];
+      setUserRoster(updatedRoster);
+      setIsEnrolled(true);
+      localStorage.setItem("roster", JSON.stringify(updatedRoster));
+
+      alert("Du er nu tilmeldt aktiviteten!");
+      router.push("/kalender");
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  const handleForlad = async () => {
+    if (!user) return;
+
+    try {
+      const token = localStorage.getItem("hallojsovs");
+      const res = await fetch(
+        `http://localhost:4000/api/v1/users/${user.id}/activities/${activity.id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (!res.ok) throw new Error("Kunne ikke afmelde");
+
+      const updatedRoster = userRoster.filter((a) => a.id !== activity.id);
+      setUserRoster(updatedRoster);
+      setIsEnrolled(false);
+      localStorage.setItem("roster", JSON.stringify(updatedRoster));
+
+      alert("Du har forladt aktiviteten.");
+      router.push("/kalender");
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  };
+
+  if (!activity) return <p>Loading...</p>;
+
+  return (
+    <div className="activity-detail-page">
+      <LoginButton />
+      <div className="activity-image-container">
+        <Image
+          src={activity.image?.url || "/images/download (1).jpeg"}
+          alt={activity.title || "Aktivitet"}
+          fill
+        />
+        <div className="button-overlay">
+          {!isEnrolled && <Button onClick={handleTilmeld}>Tilmeld</Button>}
+          {isEnrolled && <Button onClick={handleForlad}>Forlad</Button>}
         </div>
-        
-        </>
-    )
+      </div>
+      <div className="activity-info">
+        <h1>{activity.title}</h1>
+        <p>{activity.description}</p>
+        <p>Aldersgrænse: {activity.ageLimit}</p>
+        <p>
+          {activity.weekday} Kl. {activity.time}
+        </p>
+      </div>
+    </div>
+  );
 }

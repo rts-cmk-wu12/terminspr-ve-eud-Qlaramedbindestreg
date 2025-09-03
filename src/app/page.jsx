@@ -11,25 +11,25 @@ export default function Home() {
 
   return (
     <>
-    <div className="splashscreenContainer">
+    <div className="splashscreen-container">
    
    <Image 
    src="/images/splash-image.jpg" 
    fill
    alt="Splash Image"
-   className="backgroundImage">
+   className="background-image">
    </Image>
-   <div className="logoContainer">
+   <div className="logo-container">
      <h1>
-      <div className="logoPrimary">Landrup</div>
-      <div className="logoSecondary">Dans</div>
+      <div className="logo-primary">Landrup</div>
+      <div className="logo-secondary">Dans</div>
      </h1>
-     <div className="logoUnderline"></div>
+     <div className="logo-underline"></div>
    </div>
    
-   <div className="buttonContainer">
+   <div className="button-container">
      <Link href="/aktiviteter">
-     <Button className="splashscreenButton">Kom godt igang</Button>
+     <Button className="splashscreen-button">Kom godt igang</Button>
      
      </Link>
    </div>

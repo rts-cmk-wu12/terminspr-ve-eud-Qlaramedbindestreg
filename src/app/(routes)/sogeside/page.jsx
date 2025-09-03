@@ -19,15 +19,15 @@ export default function Search() {
     }, [query])
     return (
         <>
-        <div className="searchPage">
+        <div className="search-page">
             <h1>Søg </h1>
-            <div className="searchBar">
+            <div className="search-bar">
             <input type="text"
 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             />
-            <FaSearch className="searchIcon"></FaSearch>
+            <FaSearch className="search-icon"></FaSearch>
             </div>
         <ActivitiesList activities={activities}></ActivitiesList>
        

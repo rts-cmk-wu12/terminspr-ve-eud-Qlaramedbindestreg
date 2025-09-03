@@ -1,6 +1,6 @@
 @import "../../components/variables";
 
-.searchPage {
+.search-page {
     background-color: $color-primary;
     min-height: 100dvh;
     width: 100%;
@@ -15,10 +15,10 @@
       margin-bottom: 1rem;
     }
 
-    .searchBar {
+    .search-bar {
         position: relative;
         width: 100%;
-         .searchIcon {
+         .search-icon {
         position: absolute;
         right: 0.8rem;
         top: 50%;

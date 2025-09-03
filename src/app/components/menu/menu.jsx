@@ -1,10 +1,12 @@
 "use client"; 
 
 import "./menu.scss";
+
 import { FaHome, FaSearch, FaCalendarAlt} from "react-icons/fa";
 import Link from "next/link";
 
 export default function Menu() {
+
     return (
         <>
           <div className="menu">
