@@ -1,0 +1,33 @@
+@import "../../components/variables";
+
+.login-button-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+
+    .login-button {
+          display: flex;
+    justify-content: center;
+    align-items: center;
+        .icon-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: $color-accent;
+            color: $color-light;
+            cursor: pointer;
+        }
+    }
+    }
+
+}

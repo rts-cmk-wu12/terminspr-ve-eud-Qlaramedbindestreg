@@ -1,7 +1,7 @@
-
 import "./globals.css";
 import { Ubuntu, Roboto, Racing_Sans_One } from 'next/font/google'
-import Menu from "./components/menu/menu";
+import MenuWrapper from "./components/menu-wrapper/menu-wrapper";
+
 
 //Kilde: https://nextjs.org/docs/app/getting-started/fonts
 
@@ -29,6 +29,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 
+   const hideMenuPaths = ["/", "/login"];
   
   return (
     <html lang="da" className={`${ubuntu.variable} ${roboto.variable} ${racing.variable}`}>
@@ -36,7 +37,7 @@ export default function RootLayout({ children }) {
         <body>
      
           {children}
-          <Menu></Menu>
+          <MenuWrapper></MenuWrapper>
         </body>
 
     </html>

@@ -5,8 +5,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import ActivitiesList from "@/app/components/activity-list/activity-list";
-
-
+import LoginButton from "@/app/components/login-button/login-button";
 
 export const metadata = {
   title: "Aktiviteter",
@@ -41,6 +40,7 @@ export default async function AktiviteterPage() {
     <>
     
     <div className="activities-page">
+      <LoginButton></LoginButton>
        <h1>Aktiviteter</h1>
        {activities.length === 0 ? (
         <p>Ingen aktiviteter fundet.</p>

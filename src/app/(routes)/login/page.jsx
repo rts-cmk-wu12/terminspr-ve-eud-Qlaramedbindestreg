@@ -1,46 +1,81 @@
-"use client"
+"use client";
+
 import "./login.scss";
-import Image from "next/image"
-import { useActionState } from "react";
-import loginAction from "@/actions/login";
+import Image from "next/image";
+import { useState } from "react";
 import Button from "../../components/button/button";
 
-
-
-
 export default function LogIn() {
-    const [formState, formAction, isPending] = useActionState(loginAction) 
+    const [formState, setFormState] = useState(null);
+    const [isPending, setIsPending] = useState(false);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setIsPending(true);
+
+        const formData = new FormData(event.target);
+        const username = formData.get("username");
+        const password = formData.get("password");
+
+        try {
+            const res = await fetch("http://localhost:4000/auth/token", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!res.ok) throw new Error("Forkert brugernavn eller adgangskode");
+
+            const data = await res.json();
+            const token = data.token;
+
+           
+            localStorage.setItem("hallojsovs", token);
+
+       
+            window.location.href = "/aktiviteter";
+        } catch (err) {
+            setFormState({ errors: [err.message] });
+        } finally {
+            setIsPending(false);
+        }
+    };
+
     return (
+      
         <>
-    <div className="loginContainer">
-   
-   <Image 
-   src="/images/splash-image.jpg" 
-   fill
-   alt="Login Image"
-   className="backgroundImage">
-   </Image>
-            <form action={formAction}>
-            <div>
+        <div className="loginContainer">
+            <Image 
+                src="/images/splash-image.jpg" 
+                fill
+                alt="Login Image"
+                className="backgroundImage"
+            />
+
+            <form onSubmit={handleSubmit}>
+                <label>
+                    
+                    <input type="text" name="username" placeholder="brugernavn" />
+                    {formState?.properties?.username?.errors && (
+                        <p>{formState.properties.username.errors}</p>
+                    )}
+                </label>
+
                 <label>
                  
-                    <input type="text" name="username" placeholder="brugernavn"/>
-                    <p>{formState?.properties?.username?.errors}</p>
+                    <input type="password" name="password" placeholder="adgangskode" />
+                    {formState?.properties?.password?.errors && (
+                        <p>{formState.properties.password.errors}</p>
+                    )}
                 </label>
-            </div>
-            <div>
-                <label>
-                   
-                    <input type="password" name="password" placeholder="adgangskode"/>
-                       <p>{formState?.properties?.password?.errors}</p>
-                </label>
-            </div>
-            <Button type="submit" className="loginButton">Log ind</Button>
-            	<p>{formState?.errors}</p>
-        </form>
-    
-   
-   </div>
-    </>
-    )
+
+                <Button type="submit" className="loginButton" disabled={isPending}>
+                    {isPending ? "Logger ind..." : "Log ind"}
+                </Button>
+
+                {formState?.errors && <p>{formState.errors}</p>}
+            </form>
+        </div>
+        </>
+    );
 }
