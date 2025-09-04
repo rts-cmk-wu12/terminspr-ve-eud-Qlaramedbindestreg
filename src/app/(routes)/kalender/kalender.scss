@@ -33,23 +33,19 @@
   padding: 1rem;
 }
 .kalender-empty {
-
-  color: $color-dark;
-
-  padding: 1rem;
-      text-align: center;
+    text-align: center;
      font-style: italic;
      opacity: 0.8;
      padding: 1rem;
- 
+  
+     color: $color-dark;
      margin: 1rem;
-      position: absolute;
- 
-  background: rgba($color-accent, 0.8);
+   background: rgba($color-light, 0.8);
   text-decoration: none;
-  border-top-left-radius: 0;
+  border-top-left-radius: 1rem;
+
   border-top-right-radius: 1rem;
-  border-bottom-right-radius: 0rem;
-  border-bottom-left-radius: 0rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 0;
 
 }

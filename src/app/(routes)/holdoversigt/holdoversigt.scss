@@ -7,35 +7,29 @@
   height: 100vh;
   background-color: $color-primary;
 
-  .activity-roster {
-    background-color: $color-light;
-    color: $color-dark;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-
-    h2 {
-      margin-bottom: 0.5rem;
-    }
-
-    ul {
-      list-style: none;
-      padding-left: 0;
-
-      li {
-        margin-bottom: 0.25rem;
-      }
-    }
+  h1 {
+       font: var(--font-ubuntu);
+      color: white;
+      font-size: $font-size-lg;
+      text-align: left;
+      margin: 2rem;
   }
 
-  .holdoversigt-empty {
-    font-style: italic;
-    color: $color-dark;
-  }
+ .holdoversigt-empty {
+    text-align: center;
+     font-style: italic;
+     opacity: 0.8;
+     padding: 1rem;
+  
+     color: $color-dark;
+     margin: 1rem;
+   background: rgba($color-light, 0.8);
+  text-decoration: none;
+  border-top-left-radius: 1rem;
 
-  .loading,
-  .error {
-    font-weight: bold;
-    color: $color-dark;
-  }
+  border-top-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 0;
+
+}
 }

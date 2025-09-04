@@ -1,39 +1,78 @@
 @import "../../components/variables";
 
 .menu {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: $color-light;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px env(safe-area-inset-left) 10px env(safe-area-inset-right);
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $color-light;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transform: translateZ(0);
+}
+
+.menu-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  margin: 0;
+  list-style: none;
+  
+  @media (max-width: 768px) {
+    padding: 12px 10px; 
+  }
 }
 
 .menu-item {
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid $color-dark;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: $color-dark;
+    transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
 
-    .icon-circle {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 1px solid $color-dark;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: $color-dark;
-        font-size: 24px;
-        transition: background-color 0.2s, color 0.2s;
-
-        &:hover {
-            background-color: $color-dark;
-            color: $color-light;
-            cursor: pointer;
-        }
+  
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      
+      svg {
+        width: 24px;   
+        height: 24px; 
+      
+      }
     }
+
+    &:hover {
+      background-color: $color-dark;
+      color: $color-light;
+      cursor: pointer;
+    }
+  }
 }
+
+@media (max-width: 768px) {
+  .menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .menu-item {
+    .icon-circle {
+      width: 46px;
+      height: 46px;
+      font-size: 22px;
+    }
+  }
+}
+

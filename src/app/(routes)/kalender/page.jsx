@@ -3,56 +3,43 @@
 import "./kalender.scss";
 import Button from "@/app/components/button/button";
 import { useEffect, useState } from "react";
+import leaveActivity from "@/actions/delete-activity";
+
 
 export default function Kalender() {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
   const [roster, setRoster] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("hallojsovs");
-    const storedUser = localStorage.getItem("user");
 
-    if (!storedToken || !storedUser) {
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
       setError("User not logged in");
       setLoading(false);
       return;
     }
+    const parsedUser = JSON.parse(storedUser);
+    setUser(parsedUser);
 
-    setToken(storedToken);
-    setUser(JSON.parse(storedUser));
-  }, []);
-
-  useEffect(() => {
-    if (!user) return;
 
     const storedRoster = JSON.parse(localStorage.getItem("roster") || "[]");
     setRoster(storedRoster);
     setLoading(false);
-  }, [user]);
-
+  }, []);
 
   const handleAfmeld = async (activityId) => {
-    if (!user || !token) return;
+    if (!user) return;
 
     try {
-      const res = await fetch(
-        `http://localhost:4000/api/v1/users/${user.id}/activities/${activityId}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await leaveActivity(user.id, activityId);
 
-      if (!res.ok) throw new Error("Kunne ikke afmelde");
-
-    
       const updatedRoster = roster.filter((a) => a.id !== activityId);
       setRoster(updatedRoster);
       localStorage.setItem("roster", JSON.stringify(updatedRoster));
+
+      alert("Du har forladt aktiviteten.");
     } catch (err) {
       console.error(err);
       alert(err.message);

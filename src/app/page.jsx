@@ -1,24 +1,25 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link"
 import "./page.scss";
 import Button from "./components/button/button";
 
-export const metadata = {
-  title: "Hjem",
-}
-
 export default function Home() {
+ 
+
 
   return (
     <>
     <div className="splashscreen-container">
    
-   <Image 
-   src="/images/splash-image.jpg" 
-   fill
-   alt="Splash Image"
-   className="background-image">
-   </Image>
+      <Image 
+          src="/images/splash-image.jpg" 
+          fill
+          alt="Splash Image"
+          className="background-image"
+          priority // Add priority for above-the-fold images
+          sizes="100vw" // Add sizes for proper responsive behavior
+        />
    <div className="logo-container">
      <h1>
       <div className="logo-primary">Landrup</div>

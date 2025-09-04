@@ -49,8 +49,8 @@ export default function LogIn() {
                 src="/images/splash-image.jpg" 
                 fill
                 alt="Login Image"
-                className="backgroundImage"
-            />
+                className="backgroundImage" ></Image>
+            
 
             <form onSubmit={handleSubmit}>
                 <label>

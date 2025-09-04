@@ -7,6 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoginButton from "@/app/components/login-button/login-button";
 
+
 export default function AktivitetsDetaljer() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -17,7 +18,15 @@ export default function AktivitetsDetaljer() {
   const [userRoster, setUserRoster] = useState([]);
   const [isEnrolled, setIsEnrolled] = useState(false);
 
- 
+  const activityImages = {
+  "Tango": "/images/1632381947468tango.jpg",
+  "Fitness Dance": "/images/1632382020024fitnessdance.jpg",
+  "Ballroom": "/images/1632386764699ballroom.jpg",
+  "Pole Dance": "/images/1632386988204poledance.jpg",
+  "Senior": "/images/1632387200478senior.jpg",
+};
+
+
   useEffect(() => {
     const storedToken = localStorage.getItem("hallojsovs");
     const storedUser = localStorage.getItem("user");
@@ -39,11 +48,13 @@ export default function AktivitetsDetaljer() {
         const res = await fetch(`http://localhost:4000/api/v1/activities/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         if (!res.ok) throw new Error("Kunne ikke hente aktiviteten");
+
         const data = await res.json();
         setActivity(data);
 
-  
+        
         const roster = JSON.parse(localStorage.getItem("roster") || "[]");
         setIsEnrolled(roster.some((a) => a.id === data.id));
       } catch (err) {
@@ -55,26 +66,12 @@ export default function AktivitetsDetaljer() {
   }, [id]);
 
   const handleTilmeld = async () => {
-    if (!user) {
-      alert("Login for at tilmelde dig");
-      return;
-    }
-
-    if (isEnrolled) {
-      alert("Du er allerede tilmeldt denne aktivitet");
-      return;
-    }
-
-    if (user.age < activity.ageLimit) {
-      alert(`Du skal være mindst ${activity.ageLimit} år`);
-      return;
-    }
-
-
-    if (userRoster.some((a) => a.weekday === activity.weekday)) {
-      alert("Du kan ikke tilmelde dig to aktiviteter på samme dag");
-      return;
-    }
+    if (!user) return alert("Login for at tilmelde dig");
+    if (isEnrolled) return alert("Du er allerede tilmeldt denne aktivitet");
+    if (user.age < (activity.ageLimit ?? activity.minAge ?? 0))
+      return alert(`Du skal være mindst ${activity.ageLimit ?? activity.minAge ?? 0} år`);
+    if (userRoster.some((a) => a.weekday === activity.weekday))
+      return alert("Du kan ikke tilmelde dig to aktiviteter på samme dag");
 
     try {
       const token = localStorage.getItem("hallojsovs");
@@ -88,12 +85,10 @@ export default function AktivitetsDetaljer() {
 
       if (!res.ok) throw new Error("Kunne ikke tilmelde");
 
-
       const updatedRoster = [...userRoster, activity];
       setUserRoster(updatedRoster);
       setIsEnrolled(true);
       localStorage.setItem("roster", JSON.stringify(updatedRoster));
-
       alert("Du er nu tilmeldt aktiviteten!");
       router.push("/kalender");
     } catch (err) {
@@ -121,7 +116,6 @@ export default function AktivitetsDetaljer() {
       setUserRoster(updatedRoster);
       setIsEnrolled(false);
       localStorage.setItem("roster", JSON.stringify(updatedRoster));
-
       alert("Du har forladt aktiviteten.");
       router.push("/kalender");
     } catch (err) {
@@ -134,22 +128,25 @@ export default function AktivitetsDetaljer() {
 
   return (
     <div className="activity-detail-page">
-      <LoginButton />
+      <LoginButton></LoginButton>
+
       <div className="activity-image-container">
-        <Image
-          src={activity.image?.url || "/images/download (1).jpeg"}
-          alt={activity.title || "Aktivitet"}
-          fill
-        />
+         <Image
+         src={activityImages[activity.name] || "/images/splash-image.jpg"}
+         alt={activity.name || "Aktivitet"}
+         fill
+         ></Image>
+
         <div className="button-overlay">
           {!isEnrolled && <Button onClick={handleTilmeld}>Tilmeld</Button>}
           {isEnrolled && <Button onClick={handleForlad}>Forlad</Button>}
         </div>
       </div>
+
       <div className="activity-info">
-        <h1>{activity.title}</h1>
+        <h1>{activity.name}</h1>
         <p>{activity.description}</p>
-        <p>Aldersgrænse: {activity.ageLimit}</p>
+        <p>Aldersgrænse: {activity.ageLimit ?? activity.minAge ?? "N/A"}</p>
         <p>
           {activity.weekday} Kl. {activity.time}
         </p>

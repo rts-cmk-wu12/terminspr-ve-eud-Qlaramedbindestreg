@@ -1,9 +1,6 @@
-
 import "./aktiviteter.scss";
 
 import { cookies } from "next/headers";
-import Image from "next/image";
-import Link from "next/link";
 import ActivitiesList from "@/app/components/activity-list/activity-list";
 import LoginButton from "@/app/components/login-button/login-button";
 
@@ -12,7 +9,7 @@ export const metadata = {
 }
 
 export default async function AktiviteterPage() {
-
+    
     const cookieStore = await cookies();
 	const access_token = cookieStore.get("hallojsovs");
 

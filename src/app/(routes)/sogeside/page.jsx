@@ -4,6 +4,8 @@ import ActivitiesList from "@/app/components/activity-list/activity-list"
 import "./sogeside.scss";
 import { FaSearch } from "react-icons/fa";
 
+
+
 export default function Search() {
     //Kilde: https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes & https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch?utm_source=chatgpt.com#supplying_request_parameters
     const [query, setQuery] = useState("");

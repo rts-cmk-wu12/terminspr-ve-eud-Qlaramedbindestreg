@@ -21,8 +21,8 @@ const racing = Racing_Sans_One({
 
 export const metadata = {
   title: {
-    template: "%s | Landrup Dans",
-    default: "Landrup Dans"
+    title: "Landrup Dans",
+   
   },
   description: "En danseskole der tilbyder deres kunder en digital oplevelse til danseaktiviteter",
 };
