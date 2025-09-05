@@ -27,13 +27,13 @@ export default function ActivitiesList({ activities }) {
   return (
     <div className="activities-container">
       {activities.map((activity) => {
-        const imgSrc = activityImages[activity.name] || "/images/splash-image.jpg";
+        const imgSrc = activityImages[activity.asset.url] || "/images/splash-image.jpg";
 
         return (
           <div className="activity-card" key={activity.id}>
             <Image
               src={imgSrc}
-              alt={activity.name || "Aktivitet"}
+              alt={activity.asset.url || "Aktivitet"}
               className="activity-image"
               width={400}
               height={250}

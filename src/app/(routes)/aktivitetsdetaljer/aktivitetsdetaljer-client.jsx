@@ -12,7 +12,7 @@ export default function AktivitetsDetaljerClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
-
+ // Kilde: https://nextjs.org/docs/app/api-reference/functions/use-router
   const [activity, setActivity] = useState(null);
   const [user, setUser] = useState(null);
   const [userRoster, setUserRoster] = useState([]);
@@ -132,7 +132,7 @@ export default function AktivitetsDetaljerClient() {
 
       <div className="activity-image-container">
          <Image
-         src={activityImages[activity.name] || "/images/splash-image.jpg"}
+         src={activityImages[activity] || "/images/splash-image.jpg"}
          alt={activity.name || "Aktivitet"}
          fill
          ></Image>
