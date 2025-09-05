@@ -51,7 +51,7 @@ Jeg har hentet et id fra API (hvert objekt har en række af information som jeg 
 Jeg kører mit fetch med et promise (await) om at koden kører når requested er færdigt. Jeg checker manualt res.ok om der er en error. Så await venter på fetch og re.ok checker status.
 const data = await.res.json() refererer til det data som mit api har returneret som json data. 
 
-Hvis min variable roster ikke indeholder json data lander dataen i catch fordi json.parse vil kaste en fejl hvis der ikke er gyldig json data. Roster er information jeg tidligere har gemt i localstorage som jeg har fra API'et
+Hvis min key roster ikke indeholder json data lander dataen i catch fordi json.parse vil kaste en fejl hvis der ikke er gyldig json data. Roster er information jeg tidligere har gemt i localstorage som jeg har fra API'et. Logical or sørger for at hvis der ikke er nogen key returner den et tomt array.
 Hvis mit state returnerer dataen som forventet, renderer react den data med fetchActivity();
 [id] til sidst er et dependency array som fortæller react at effekten skal køre igen når id har ændret sig. 
 
