@@ -28,5 +28,5 @@ Eftermiddag - 15.51
 
 ## Dag 5
 
-Morgen - 08.02 
+Morgen - 08.03
 Eftermiddag - (tidspunkt)
