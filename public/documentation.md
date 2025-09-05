@@ -55,7 +55,7 @@ Hvis min variable roster ikke indeholder json data lander dataen i catch fordi j
 Hvis mit state returnerer dataen som forventet, renderer react den data med fetchActivity();
 [id] til sidst er et dependency array som fortæller react at effekten skal køre igen når id har ændret sig. 
 
- Kilder:
+Kilder:
 https://react.dev/reference/react/useEffect
 https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch
 https://developer.mozilla.org/en-US/docs/Web/API/Response/ok

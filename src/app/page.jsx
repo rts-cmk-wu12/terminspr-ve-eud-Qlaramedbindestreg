@@ -17,8 +17,8 @@ export default function Home() {
           fill
           alt="Splash Image"
           className="background-image"
-          priority // Add priority for above-the-fold images
-          sizes="100vw" // Add sizes for proper responsive behavior
+          priority 
+          sizes="100vw" 
         />
    <div className="logo-container">
      <h1>
