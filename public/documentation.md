@@ -7,23 +7,37 @@ Clara Qvist-Richards WU12
 * Github
 * React-icons
 * SASS
-* Api
+* Landrup Dans API
 * Zod
 
 ### Kode-eksempel
-Navn på kode (filnavn fx components/ui/common-header.jsx)
+/Users/qlara/Desktop/coding/next/terminspr-ve-eud-Qlaramedbindestreg/src/app/(routes)/aktivitetsdetaljer/page.jsx
 ``` jsx
-Kode-eksempel her
+  useEffect(() => {
+    if (!id) return;
 
-const [title, setTitle] = useState("");
+    const fetchActivity = async () => {
+      try {
+        const token = localStorage.getItem("hallojsovs");
+        const res = await fetch(`http://localhost:4000/api/v1/activities/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-useEffect(function () {
-    switch (pathname) {
+        if (!res.ok) throw new Error("Kunne ikke hente aktiviteten");
 
-    }
-},  [pathname] );
+        const data = await res.json();
+        setActivity(data);
 
-<button onClick = {() => router.back()} >
+        
+        const roster = JSON.parse(localStorage.getItem("roster") || "[]");
+        setIsEnrolled(roster.some((a) => a.id === data.id));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchActivity();
+  }, [id]);
 ```
 useState = Jeg starter med at kalde useState som er en hook, dvs. en indbygget funktion i react. Når vi kører useState får vi returneret et Array. Det Array indeholder et state og en setter funktion til statet. useState tager imod et argument "initialState" som er værdien for statet ved start. 
 Vi bruger det hvis vi har nogle værdier vi gerne vil have opdateret undervejs. 
