@@ -1,6 +1,9 @@
 # Dokumentation for iPlayMusic
 Clara Qvist-Richards WU12
 
+Deployed app: 
+https://terminspr-ve-eud-qlaramedbindestreg.vercel.app/
+
 ## Tech-stack
 * Next.js
 * React
@@ -39,12 +42,23 @@ Clara Qvist-Richards WU12
     fetchActivity();
   }, [id]);
 ```
-useState = Jeg starter med at kalde useState som er en hook, dvs. en indbygget funktion i react. Når vi kører useState får vi returneret et Array. Det Array indeholder et state og en setter funktion til statet. useState tager imod et argument "initialState" som er værdien for statet ved start. 
-Vi bruger det hvis vi har nogle værdier vi gerne vil have opdateret undervejs. 
 
-useEffect = En react hook som er en funktion. En void funktion, returnerer ikke noget. Håndterer side effects, som fetch, som er asynkron. Det er en sideløbende process som egentlig ikke har noget med vores hovedfunktion at gøre. Bliver kørt når værdien inde i arrayet ændrer sig, efter første render. 
+Jeg starter med at kalde useEffect som er en react hook. Den håndterer mit fetch, som er asynkron. Det er en sideløbende process som egentlig ikke har noget med vores hovedfunktion at gøre. Useeffect returnerer derfor ikke noget, men kan bruges som en indre asynkron funktion (altså useEffect i sig selv må ikke være asynkron, men den lader den indre funktion være det). Det er den jeg har kaldt fetchActivity.   
+Jeg bruger localStorage til at gemme den information jeg har hentet fra min createActivity information (mit token som jeg har valgt det meget kreative navn hallojsovs). Jeg har gemt den i en token, men hvis der ikke er gemt noget i den så returnere den Authorization: Bearer null.
 
-OnClick = en property (atribut). En eventlistener der lytter efter et click. 
+Jeg har hentet et id fra API (hvert objekt har en række af information som jeg henter) Så linjen if (!id) er en guard clause der sørger for at hvis der ikke er noget id, så kører koden ikke.  
 
+Jeg kører mit fetch med et promise (await) om at koden kører når requested er færdigt. Jeg checker manualt res.ok om der er en error. Så await venter på fetch og re.ok checker status.
+const data = await.res.json() refererer til det data som mit api har returneret som json data. 
 
+Hvis min variable roster ikke indeholder json data lander dataen i catch fordi json.parse vil kaste en fejl hvis der ikke er gyldig json data. Roster er information jeg tidligere har gemt i localstorage som jeg har fra API'et
+Hvis mit state returnerer dataen som forventet, renderer react den data med fetchActivity();
+[id] til sidst er et dependency array som fortæller react at effekten skal køre igen når id har ændret sig. 
 
+ Kilder:
+https://react.dev/reference/react/useEffect
+https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch
+https://developer.mozilla.org/en-US/docs/Web/API/Response/ok
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+https://react.dev/learn/synchronizing-with-effects#why-was-the-ref-omitted-from-the-dependency-array
