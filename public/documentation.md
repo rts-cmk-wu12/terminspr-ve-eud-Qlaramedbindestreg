@@ -44,11 +44,11 @@ https://terminspr-ve-eud-qlaramedbindestreg.vercel.app/
 ```
 
 Jeg starter med at kalde useEffect som er en react hook. Den håndterer mit fetch, som er asynkron. Det er en sideløbende process som egentlig ikke har noget med vores hovedfunktion at gøre. Useeffect returnerer derfor ikke noget, men kan bruges som en indre asynkron funktion (altså useEffect i sig selv må ikke være asynkron, men den lader den indre funktion være det). Det er den jeg har kaldt fetchActivity.   
-Jeg bruger localStorage til at gemme den information jeg har hentet fra min createActivity information (mit token som jeg har valgt det meget kreative navn hallojsovs). Jeg har gemt den i en token, men hvis der ikke er gemt noget i den så returnere den Authorization: Bearer null.
+Jeg bruger localStorage til at gemme den information jeg har hentet fra min createActivity information (mit token som jeg har givet det meget kreative navn hallojsovs). Jeg har gemt den i en token, men hvis der ikke er gemt noget i den så returnere den Authorization: Bearer null.
 
 Jeg har hentet et id fra API (hvert objekt har en række af information som jeg henter) Så linjen if (!id) er en guard clause der sørger for at hvis der ikke er noget id, så kører koden ikke.  
 
-Jeg kører mit fetch med et promise (await) om at koden kører når requested er færdigt. Jeg checker manualt res.ok om der er en error. Så await venter på fetch og re.ok checker status.
+Jeg kører mit fetch med et promise (await) om at koden kører når requested er færdigt. Jeg checker manualt res.ok om der er en error. Så await venter på fetch og res.ok checker status.
 const data = await.res.json() refererer til det data som mit api har returneret som json data. 
 
 Hvis min key roster ikke indeholder json data lander dataen i catch fordi json.parse vil kaste en fejl hvis der ikke er gyldig json data. Roster er information jeg tidligere har gemt i localstorage som jeg har fra API'et. Logical or sørger for at hvis der ikke er nogen key returner den et tomt array.
